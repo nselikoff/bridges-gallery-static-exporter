@@ -1,0 +1,54 @@
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <div id="content">
+      <h1 class="name" id="page-title">{{Name}}</h1>
+      <div class="artist-meta">
+        <div class="position">{{Position}}</div>
+        <div class="affiliation">{{Affiliation}}</div>
+        <div class="location">{{Location}}</div>
+      </div>
+      <div class="statement">
+        {{{Statement}}}
+      </div>
+      <div class="artwork-items">
+        {{#each Artwork}}
+          <div class="artwork-content">
+            <div class="artwork-image-meta">
+              <div class="image">
+                <img src="{{Image}}" alt="{{Title}}" height="600" />
+              </div>
+              <div class="artwork-meta">
+                <div class="title">{{Title}}</div>
+                <div class="dimensions">{{ComputedDimensions}}</div>
+                <div class="medium">{{Medium}}</div>
+                <div class="year">{{Year}}</div>
+              </div>
+            </div>
+            <div class="description">
+              {{{Description}}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+      <div class="gallery-link">
+        <a href="{{URL}}" target="_blank">View in the Bridges 2021 gallery</a>
+      </div>
+    </div>
+
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </body>
+
+</html>
