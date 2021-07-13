@@ -18,3 +18,6 @@ Generate static HTML files for every artwork in a Bridges Gallery
 `npm run build`
 
 When complete, the `build` directory will include the generated HTML and CSS files, with root-relative image urls pointing to the files you manually copied into `build/files`.
+
+Zip everything up for distribution:
+`zip -r bridges-gallery-static.zip build/* -x ".*" -x "__MACOSX"`

@@ -67,14 +67,10 @@ const parseCatalogExportXml = (xml) => {
       console.log(
         `Parsed catalog export XML; there are ${result.nodes.node.length} artworks`
       );
-      // TODO: index
-      // TODO: all pages
-      const node = result.nodes.node[0];
-      transformNode(node);
-      generateHtmlForNode(node, 0);
-      // result.nodes.node.forEach((node, index) => {
-      //   generateHtmlForNode(node, index);
-      // });
+      result.nodes.node.forEach((node, index) => {
+        transformNode(node);
+        generateHtmlForNode(node, index);
+      });
     }
   });
 };
