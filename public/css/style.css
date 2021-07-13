@@ -97,6 +97,11 @@ h1 {
   margin: 0;
 }
 
+img {
+  max-width: 100%;
+  max-height: 600px;
+}
+
 .artist-meta,
 .artwork-meta {
   font-size: 0.8rem;
@@ -122,6 +127,10 @@ h1 {
 
 .artwork-image-meta {
   text-align: center;
+}
+
+.tex2jax {
+  overflow-x: auto;
 }
 
 /* ==========================================================================
