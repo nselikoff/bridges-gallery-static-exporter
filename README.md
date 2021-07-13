@@ -4,7 +4,13 @@ Generate static HTML files for every artwork in a Bridges Gallery
 
 ## Prerequisites
 
-- On http://gallery.bridgesmathart.org/, configure the XML export view for the current exhibition, and download the XML from http://gallery.bridgesmathart.org/catalog-export.xml into the root directory of this checked out repo.
+- node
+- admin and server access to http://gallery.bridgesmathart.org/
+
+## Development
+
+- Install node packages: `npm install`
+- On http://gallery.bridgesmathart.org/, configure the XML export view for the current exhibition, and download the `catalog-export.xml` file from http://gallery.bridgesmathart.org/catalog-export.xml into the root directory of this checked out repo.
 - Download the appropriate image files from the webserver (e.g. `files/bridges2021/*`) and copy the subdirectory (e.g. `bridges2021`) into the build/files directory.
 
 ## Build
