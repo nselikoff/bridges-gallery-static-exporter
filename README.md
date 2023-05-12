@@ -6,18 +6,15 @@ Generate static HTML files for every artwork in a Bridges Gallery
 
 - node
 - admin and server access to http://gallery.bridgesmathart.org/
+- bridges files uploaded to s3
 
 ## Development
 
 - Install node packages: `npm install`
-- On http://gallery.bridgesmathart.org/, configure the XML export view for the current exhibition, and download the `catalog-export.xml` file from http://gallery.bridgesmathart.org/catalog-export.xml into the root directory of this checked out repo.
-- Download the appropriate image files from the webserver (e.g. `files/bridges2021/*`) and copy the subdirectory (e.g. `bridges2021`) into the build/files directory.
+- On http://gallery.bridgesmathart.org/, export catalog XML files for art, film and fashion. Art is the only category big enough to require multiple exports (1000 at a time) which should be merged manually. Put the catalog-export-fashion.xml, catalog-export-film.xml, and catalog-export.xml (art) into the root directory of this checked out repo.
 
 ## Build
 
 `npm run build`
 
-When complete, the `build` directory will include the generated HTML and CSS files, with root-relative image urls pointing to the files you manually copied into `build/files`.
-
-Zip everything up for distribution:
-`zip -r bridges-gallery-static.zip build/* -x ".*" -x "__MACOSX"`
+When complete, the `build` directory will include the generated HTML and CSS files, with image urls pointing to s3. This will include index files for the individual exhibitions. You can browse the generated files by running `python -m http.server` in the build directory.

@@ -4,7 +4,7 @@
   "description": "Transform XML catalog export into static HTML",
   "main": "index.js",
   "scripts": {
-    "build": "rm -f build/*.html && rm -rf build/css && node build.js && cp -r public/css build/css",
+    "build": "rm -rf build/exhibitions && rm -rf build/css && node build.js && cp -r public/css build/css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

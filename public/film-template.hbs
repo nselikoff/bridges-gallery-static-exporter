@@ -4,7 +4,7 @@
     <title>{{title}} | {{exhibitionDisplayName}}</title>
     <meta
       name="description"
-      content="View the work of {{title}} in the online mathematical art gallery of the {{exhibitionDisplayName}}."
+      content="View the work of {{title}} in the online mathematical film gallery of the {{exhibitionDisplayName}}."
     />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,7 +39,7 @@
         {{{statement}}}
       </section>
       <section class="artwork-items">
-        {{#each artworks}}
+        {{#each films}}
           <div class="artwork-content">
             <div class="artwork-image-meta">
               <div class="image">
@@ -47,12 +47,12 @@
               </div>
               <div class="artwork-meta">
                 <div class="title">{{title}}</div>
-                <div class="dimensions">{{computedDimensions}}</div>
-                <div class="medium">{{medium}}</div>
+                <div class="length">{{length}}</div>
+                <div class="credit-info">{{creditInfo}}</div>
                 <div class="year">{{year}}</div>
-                <div class="more-info"><a
-                    href="{{moreInfo}}"
-                  >{{moreInfo}}</a></div>
+                <div class="public-link"><a
+                    href="{{publicLink}}"
+                  >{{publicLink}}</a></div>
               </div>
             </div>
             <div class="description">

@@ -90,6 +90,8 @@ textarea {
 body {
   font-family: Helvetica, Arial, "Nimbus Sans L", sans-serif;
   padding: 1rem;
+  max-width: 80ch;
+  margin: auto;
 }
 
 h1 {
@@ -100,6 +102,16 @@ h1 {
 img {
   max-width: 100%;
   max-height: 600px;
+}
+
+footer {
+  font-size: 0.8rem;
+  color: #777;
+  text-align: center;
+}
+
+.breadcrumb {
+  margin-bottom: 2rem;
 }
 
 .artist-meta,
@@ -131,6 +143,36 @@ img {
 
 .tex2jax {
   overflow-x: auto;
+}
+
+.submission-items {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.submission-content {
+  width: 100px;
+  font-size: 0.8rem;
+  text-align: center;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.thumbnail img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.submission-meta {
+  margin-top: 0.5rem;
+}
+
+.title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* ==========================================================================

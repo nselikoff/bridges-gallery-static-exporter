@@ -1,5 +1,5 @@
 node_modules
 build
-catalog-export.xml
+*.xml
 .DS_Store
 *.zip

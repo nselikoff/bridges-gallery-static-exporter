@@ -1,0 +1,53 @@
+<html>
+
+  <head>
+    <title>{{exhibitionDisplayName}}</title>
+    <meta
+      name="description"
+      content="View the online mathematical art gallery of the {{exhibitionDisplayName}}."
+    />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav class="breadcrumb">
+        <a href="/">Home</a>
+        &raquo;
+        <a href="/exhibitions">Exhibitions</a>
+      </nav>
+    </header>
+    <article>
+      <h1>{{exhibitionDisplayName}}</h1>
+      <section class="submission-items">
+        {{#each submissions}}
+          <div class="submission-content">
+            <a
+              class="submission-thumbnail-meta"
+              href="/exhibitions/{{exhibition}}/{{slug}}"
+            >
+              <div class="thumbnail">
+                <img src="{{thumbnail}}" alt="{{title}}" />
+              </div>
+              <div class="submission-meta">
+                <div class="title">{{title}}</div>
+              </div>
+            </a>
+          </div>
+        {{/each}}
+      </section>
+    </article>
+    <footer>
+      <p>
+        Copyright &copy;2010-2023
+        <a href="http://bridgesmathart.org">The Bridges Organization</a>.<br />
+        Site Design &amp; Development by
+        <a href="http://www.nathanselikoff.com">Nathan Selikoff</a>.
+      </p>
+    </footer>
+  </body>
+
+</html>
