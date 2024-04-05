@@ -17,7 +17,7 @@ const extractImageSrc = (htmlString) => {
   return src
     ? src.replace(
         "http://gallery.bridgesmathart.org/sites/live.gallery.host.sunstormlab.com",
-        "https://s3.amazonaws.com/files.gallery.bridgesmathart.org"
+        "https://s3.amazonaws.com/files.gallery.bridgesmathart.org",
       )
     : "https://placehold.it/600x600";
 };
@@ -28,9 +28,15 @@ const getExhibitionDisplayName = (exhibition) =>
     .map((string) =>
       string
         ? string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
-        : ""
+        : "",
     )
     .join(" ");
+
+const trimText = (text) => {
+  if (!text) return null;
+  const trimmed = text.trim();
+  return trimmed ? trimmed : null;
+};
 
 const extractSubmission = (node) => {
   // Get the exhibition slug and submission slug from the URL
@@ -42,13 +48,18 @@ const extractSubmission = (node) => {
 
   const exhibitionDisplayName = getExhibitionDisplayName(exhibition);
   const thumbnail = extractImageSrc(node.Thumbnail);
-  const title = node.Name;
-  const position = node.Position;
-  const affiliation = node.Affiliation;
-  const location = node.Location;
-  const emails = node.Email.split(",").map((d) => d.trim());
-  const websites = node.Website.split(",").map((d) => d.trim());
-  const statement = node.Statement;
+  const title = trimText(node.Name);
+  const position = trimText(node.Position);
+  const affiliation = trimText(node.Affiliation);
+  const location = trimText(node.Location);
+  const emails = node.Email.split(",")
+    .map((d) => trimText(d))
+    .filter((d) => !!d);
+  const websites = node.Website.split(",")
+    .map((d) => trimText(d))
+    .filter((d) => !!d);
+  let statement = trimText(cleanText(node.Statement));
+  const author = parseInt(node["Author-uid"]);
 
   return {
     exhibition,
@@ -62,12 +73,13 @@ const extractSubmission = (node) => {
     emails,
     websites,
     statement,
+    author,
   };
 };
 
 const generateHtmlForSubmission = (template, submission, id) => {
   console.log(
-    `Generating html for submission ${id} (${submission.exhibition} / ${submission.slug})`
+    `Generating html for submission ${id} (${submission.exhibition} / ${submission.slug})`,
   );
   const html = buildHTML(template, submission);
   const path = `./build/exhibitions/${submission.exhibition}/${submission.slug}`;
@@ -80,7 +92,7 @@ const generateHtmlForSubmission = (template, submission, id) => {
 const generateHtmlForIndexes = (submissions) => {
   const groupedSubmissions = submissions.reduce(
     (r, v, i, a, k = v.exhibition) => ((r[k] || (r[k] = [])).push(v), r),
-    {}
+    {},
   );
   Object.entries(groupedSubmissions).forEach(([exhibition, submissions]) => {
     console.log(`Generating html for {{exhibition}} index`);
@@ -98,11 +110,17 @@ const generateHtmlForIndexes = (submissions) => {
   });
 };
 
+const cleanText = (text) => {
+  return text.replace(/(<([^>]+)>)/gi, "").replace(/\n$/, "");
+};
+
 module.exports = {
   buildHTML,
+  cleanText,
   extractImageSrc,
   extractSubmission,
   getExhibitionDisplayName,
   generateHtmlForSubmission,
   generateHtmlForIndexes,
+  trimText,
 };

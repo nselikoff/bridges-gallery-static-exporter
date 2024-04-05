@@ -5,16 +5,17 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf build/exhibitions && rm -rf build/css && node build.js && cp -r public/css build/css",
+    "export": "rm -rf export && node export.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "7.30.0",
-    "eslint-config-prettier": "8.3.0",
-    "handlebars": "4.7.7",
-    "jsdom": "16.6.0",
-    "prettier": "2.3.2",
-    "xml2js": "0.4.23"
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "handlebars": "4.7.8",
+    "jsdom": "24.0.0",
+    "prettier": "3.2.5",
+    "xml2js": "0.6.2"
   }
 }

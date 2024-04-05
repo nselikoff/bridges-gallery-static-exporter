@@ -26,13 +26,13 @@ const extractFilm = (node) => {
   };
 };
 
-const parseFilmCatalogXml = (xml) => {
+const buildFilmCatalogXml = (xml) => {
   parseString(xml, { explicitArray: false }, (err, result) => {
     if (err) {
       console.error(err);
     } else {
       console.log(
-        `Parsed catalog export XML; there are ${result.nodes.node.length} films`
+        `Parsed catalog export XML; there are ${result.nodes.node.length} films`,
       );
       const submissionsMap = new Map();
       result.nodes.node.forEach((node) => {
@@ -62,5 +62,5 @@ const parseFilmCatalogXml = (xml) => {
 };
 
 module.exports = {
-  parseFilmCatalogXml,
+  buildFilmCatalogXml,
 };

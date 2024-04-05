@@ -40,13 +40,13 @@ const extractFashionImage = (node) => {
   };
 };
 
-const parseFashionCatalogXml = (xml) => {
+const buildFashionCatalogXml = (xml) => {
   parseString(xml, { explicitArray: false }, (err, result) => {
     if (err) {
       console.error(err);
     } else {
       console.log(
-        `Parsed catalog export XML; there are ${result.nodes.node.length} nodes`
+        `Parsed catalog export XML; there are ${result.nodes.node.length} nodes`,
       );
       const submissionsMap = new Map();
       result.nodes.node.forEach((node) => {
@@ -64,13 +64,13 @@ const parseFashionCatalogXml = (xml) => {
           if (fashionItem.id) {
             fashionItemsMap.set(fashionItem.id, fashionItem);
             console.log(
-              `Added fashion item ${fashionItem.id} to submission ${nid}`
+              `Added fashion item ${fashionItem.id} to submission ${nid}`,
             );
           }
           if (fashionImage.id) {
             fashionImagesMap.set(fashionImage.id, fashionImage);
             console.log(
-              `Added fashion image ${fashionImage.id} to submission ${nid}`
+              `Added fashion image ${fashionImage.id} to submission ${nid}`,
             );
           }
           submissionsMap.set(nid, {
@@ -86,7 +86,7 @@ const parseFashionCatalogXml = (xml) => {
           ) {
             submission.fashionItemsMap.set(fashionItem.id, fashionItem);
             console.log(
-              `Added fashion item ${fashionItem.id} to submission ${nid}`
+              `Added fashion item ${fashionItem.id} to submission ${nid}`,
             );
           }
           if (
@@ -95,7 +95,7 @@ const parseFashionCatalogXml = (xml) => {
           ) {
             submission.fashionImagesMap.set(fashionImage.id, fashionImage);
             console.log(
-              `Added fashion image ${fashionImage.id} to submission ${nid}`
+              `Added fashion image ${fashionImage.id} to submission ${nid}`,
             );
           }
         }
@@ -108,7 +108,7 @@ const parseFashionCatalogXml = (xml) => {
             fashionItems: Array.from(submission.fashionItemsMap.values()),
             fashionImages: Array.from(submission.fashionImagesMap.values()),
           },
-          id
+          id,
         );
       });
       generateHtmlForIndexes(Array.from(submissionsMap.values()));
@@ -117,5 +117,5 @@ const parseFashionCatalogXml = (xml) => {
 };
 
 module.exports = {
-  parseFashionCatalogXml,
+  buildFashionCatalogXml,
 };

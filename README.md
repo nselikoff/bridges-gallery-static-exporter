@@ -18,3 +18,9 @@ Generate static HTML files for every artwork in a Bridges Gallery
 `npm run build`
 
 When complete, the `build` directory will include the generated HTML and CSS files, with image urls pointing to s3. This will include index files for the individual exhibitions. You can browse the generated files by running `python -m http.server` in the build directory.
+
+## Export
+
+`npm run export`
+
+When complete, the `export` directory will include JSON files with cleaned up data for each exhibition type.
