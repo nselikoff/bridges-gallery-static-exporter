@@ -111,7 +111,10 @@ const generateHtmlForIndexes = (submissions) => {
 };
 
 const cleanText = (text) => {
-  return text.replace(/(<([^>]+)>)/gi, "").replace(/\n$/, "");
+  return text
+    .replace(/(<([^>]+)>)/gi, "") // strip html tags
+    .replace(/\r\n/g, "\n") // normalize line breaks
+    .replace(/U+00a0/g, " "); // normalize spaces
 };
 
 module.exports = {

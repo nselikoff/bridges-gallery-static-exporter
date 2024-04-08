@@ -14,7 +14,7 @@ const extractArtwork = (node) => {
   const computedDimensions = trimText(node.ComputedDimensions);
   const medium = trimText(node.Medium);
   const year = trimText(node.Year);
-  let description = trimText(cleanText(node.Description));
+  const description = trimText(cleanText(node.Description));
   const moreInfo = trimText(node.MoreInfo);
 
   return {
