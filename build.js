@@ -1,25 +1,25 @@
 const fs = require("fs");
-const { parseArtCatalogXml } = require("./art");
-const { parseFilmCatalogXml } = require("./film");
-const { parseFashionCatalogXml } = require("./fashion");
+const { buildArtCatalogXml } = require("./art");
+const { buildFilmCatalogXml } = require("./film");
+const { buildFashionCatalogXml } = require("./fashion");
 
-parseArtCatalogXml(
+buildArtCatalogXml(
   fs.readFileSync("./catalog-export.xml", {
     encoding: "utf8",
     flag: "r",
-  })
+  }),
 );
 
-parseFilmCatalogXml(
+buildFilmCatalogXml(
   fs.readFileSync("./catalog-export-film.xml", {
     encoding: "utf8",
     flag: "r",
-  })
+  }),
 );
 
-parseFashionCatalogXml(
+buildFashionCatalogXml(
   fs.readFileSync("./catalog-export-fashion.xml", {
     encoding: "utf8",
     flag: "r",
-  })
+  }),
 );

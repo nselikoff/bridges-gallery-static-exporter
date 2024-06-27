@@ -1,19 +1,21 @@
 const parseString = require("xml2js").parseString;
 const {
+  cleanText,
   extractImageSrc,
   extractSubmission,
   generateHtmlForSubmission,
   generateHtmlForIndexes,
+  trimText,
 } = require("./utils");
 
 const extractFashionItem = (node) => {
   const id = node.ItemId;
-  const title = node.ItemTitle;
-  const year = node.ItemYear;
-  const medium = node.ItemMedium;
-  const description = node.ItemDescription;
+  const title = trimText(node.ItemTitle);
+  const year = trimText(node.ItemYear);
+  const medium = trimText(node.ItemMedium);
+  const description = trimText(cleanText(node.ItemDescription));
   const image = extractImageSrc(node.ItemImage);
-  const credits = node.ItemCredits;
+  const credits = trimText(node.ItemCredits);
 
   return {
     id,
@@ -28,9 +30,9 @@ const extractFashionItem = (node) => {
 
 const extractFashionImage = (node) => {
   const id = node.ImageId;
-  const caption = node.ImageCaption;
+  const caption = trimText(node.ImageCaption);
   const image = extractImageSrc(node.ImageImage);
-  const credits = node.ImageCredits;
+  const credits = trimText(node.ImageCredits);
 
   return {
     id,
@@ -40,13 +42,13 @@ const extractFashionImage = (node) => {
   };
 };
 
-const parseFashionCatalogXml = (xml) => {
+const buildFashionCatalogXml = (xml) => {
   parseString(xml, { explicitArray: false }, (err, result) => {
     if (err) {
       console.error(err);
     } else {
       console.log(
-        `Parsed catalog export XML; there are ${result.nodes.node.length} nodes`
+        `Parsed catalog export XML; there are ${result.nodes.node.length} nodes`,
       );
       const submissionsMap = new Map();
       result.nodes.node.forEach((node) => {
@@ -56,21 +58,21 @@ const parseFashionCatalogXml = (xml) => {
 
         if (!submissionsMap.has(nid)) {
           const submission = extractSubmission(node);
-          submission.designer = node.Designer;
-          submission.brand = node.Brand;
+          submission.designer = trimText(node.Designer);
+          submission.brand = trimText(node.Brand);
           const fashionItemsMap = new Map();
           const fashionImagesMap = new Map();
           console.log(`Adding submission ${nid}`);
           if (fashionItem.id) {
             fashionItemsMap.set(fashionItem.id, fashionItem);
             console.log(
-              `Added fashion item ${fashionItem.id} to submission ${nid}`
+              `Added fashion item ${fashionItem.id} to submission ${nid}`,
             );
           }
           if (fashionImage.id) {
             fashionImagesMap.set(fashionImage.id, fashionImage);
             console.log(
-              `Added fashion image ${fashionImage.id} to submission ${nid}`
+              `Added fashion image ${fashionImage.id} to submission ${nid}`,
             );
           }
           submissionsMap.set(nid, {
@@ -86,7 +88,7 @@ const parseFashionCatalogXml = (xml) => {
           ) {
             submission.fashionItemsMap.set(fashionItem.id, fashionItem);
             console.log(
-              `Added fashion item ${fashionItem.id} to submission ${nid}`
+              `Added fashion item ${fashionItem.id} to submission ${nid}`,
             );
           }
           if (
@@ -95,7 +97,7 @@ const parseFashionCatalogXml = (xml) => {
           ) {
             submission.fashionImagesMap.set(fashionImage.id, fashionImage);
             console.log(
-              `Added fashion image ${fashionImage.id} to submission ${nid}`
+              `Added fashion image ${fashionImage.id} to submission ${nid}`,
             );
           }
         }
@@ -108,7 +110,7 @@ const parseFashionCatalogXml = (xml) => {
             fashionItems: Array.from(submission.fashionItemsMap.values()),
             fashionImages: Array.from(submission.fashionImagesMap.values()),
           },
-          id
+          id,
         );
       });
       generateHtmlForIndexes(Array.from(submissionsMap.values()));
@@ -116,6 +118,72 @@ const parseFashionCatalogXml = (xml) => {
   });
 };
 
+const exportFashionCatalogXml = (xml) => {
+  const submissionsMap = new Map();
+  parseString(xml, { explicitArray: false }, (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(
+        `Parsed catalog export XML; there are ${result.nodes.node.length} nodes`,
+      );
+      result.nodes.node.forEach((node) => {
+        const nid = node.Nid;
+        const fashionItem = extractFashionItem(node);
+        const fashionImage = extractFashionImage(node);
+
+        if (!submissionsMap.has(nid)) {
+          const submission = extractSubmission(node);
+          submission.designer = trimText(node.Designer);
+          submission.brand = trimText(node.Brand);
+          const fashionItemsMap = new Map();
+          const fashionImagesMap = new Map();
+          console.log(`Adding submission ${nid}`);
+          if (fashionItem.id) {
+            fashionItemsMap.set(fashionItem.id, fashionItem);
+            console.log(
+              `Added fashion item ${fashionItem.id} to submission ${nid}`,
+            );
+          }
+          if (fashionImage.id) {
+            fashionImagesMap.set(fashionImage.id, fashionImage);
+            console.log(
+              `Added fashion image ${fashionImage.id} to submission ${nid}`,
+            );
+          }
+          submissionsMap.set(nid, {
+            ...submission,
+            fashionItemsMap,
+            fashionImagesMap,
+          });
+        } else {
+          const submission = submissionsMap.get(nid);
+          if (
+            fashionItem.id &&
+            !submission.fashionItemsMap.has(fashionItem.id)
+          ) {
+            submission.fashionItemsMap.set(fashionItem.id, fashionItem);
+            console.log(
+              `Added fashion item ${fashionItem.id} to submission ${nid}`,
+            );
+          }
+          if (
+            fashionImage.id &&
+            !submission.fashionImagesMap.has(fashionImage.id)
+          ) {
+            submission.fashionImagesMap.set(fashionImage.id, fashionImage);
+            console.log(
+              `Added fashion image ${fashionImage.id} to submission ${nid}`,
+            );
+          }
+        }
+      });
+    }
+  });
+  return submissionsMap;
+};
+
 module.exports = {
-  parseFashionCatalogXml,
+  buildFashionCatalogXml,
+  exportFashionCatalogXml,
 };
